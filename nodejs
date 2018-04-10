@@ -1,0 +1,26 @@
+#
+# Cookbook:: npm
+# Recipe:: default
+#
+# Copyright:: 2018, The Authors, All Rights 
+package "nodejs" do
+  action :install
+end
+
+git "/tmp/node-js-sample" do
+  repository "https://github.com/heroku/node-js-sample.git"
+  action :checkout
+end
+
+execute  "Install npm" do
+  cwd "/tmp/node-js-sample"
+  command "npm install"
+  action :run
+end
+
+bash "start the npm" do
+  cwd "/tmp/node-js-sample"
+code <<-EOF
+   npm start > /dev/null 2>&1 & 
+ EOF
+end
